@@ -1,0 +1,21 @@
+Product
+│
+├── brand()       → belongsTo
+├── category()    → belongsTo
+├── images()      → hasMany
+├── colors()      → hasMany
+├── sizes()       → belongsToMany
+├── collections() → belongsToMany
+└── ratings()     → hasMany
+
+collection brands or category k hooks or services bna kar website me backedn ko integrate karwana he 
+
+
+
+index()       → Admin products listing + pagination
+all()         → Website ke liye published products
+search()      → Admin product search
+store()       → Product create
+show()        → Single product
+update()      → Product update
+destroy()     → Product delete
