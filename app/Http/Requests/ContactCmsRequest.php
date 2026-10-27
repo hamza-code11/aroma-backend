@@ -11,6 +11,20 @@ class ContactCmsRequest extends FormRequest
         return true;
     }
 
+    // ✅ YEH NAYA METHOD ADD KAREIN (FormData JSON strings ko array mein convert karne ke liye)
+    protected function prepareForValidation()
+    {
+        $jsonFields = ['hero', 'info', 'faq'];
+        
+        foreach ($jsonFields as $field) {
+            if ($this->has($field) && is_string($this->$field)) {
+                $this->merge([
+                    $field => json_decode($this->$field, true),
+                ]);
+            }
+        }
+    }
+
     public function rules(): array
     {
         return [

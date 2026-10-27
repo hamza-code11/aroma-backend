@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            // UserSeeder::class,
-            // CategorySeeder::class,
-            // ProductSeeder::class,
-            // TestimonialSeeder::class,
-            // ContactCmsSeeder::class,
-            // AboutCmsSeeder::class,
-            // ShopCmsSeeder ::class,
-            // BannerCmsSeeder ::class,
-            // HeroCmsSeeder ::class,
+            UserSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            TestimonialSeeder::class,
+            ContactCmsSeeder::class,
+            AboutCmsSeeder::class,
+            ShopCmsSeeder ::class,
+            BannerCmsSeeder ::class,
+            HeroCmsSeeder ::class,
         ]);
     }
 }

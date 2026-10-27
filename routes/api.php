@@ -16,6 +16,25 @@ use App\Http\Controllers\ShopCmsController;
 use App\Http\Controllers\BannerCmsController;
 use App\Http\Controllers\HeroCmsController;
 use App\Http\Controllers\TaxIdController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FedExController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AdminDashboardController;
+
+
+
+
+// Route::get('/create-symplink', function () {
+//     symlink(storage_path('app/public'), public_path('storage'));
+//     return 'Storage linked successfully';
+// });
+
+// Route::get('/test-api', function () {
+//     return response()->json([
+//         'status' => true,
+//         'message' => 'API is working '
+//     ]);
+// });
 
 
 
@@ -59,8 +78,20 @@ Route::get('/hero-cms', [HeroCmsController::class, 'show']);
 
 
     
-Route::middleware(['auth:sanctum', 'verified.taxid'])->group(function () {
-    Route::post('/checkout', [CheckoutController::class, 'process']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    // ==========================================
+    // CHECKOUT ROUTES (Yahan add karein)
+    // ==========================================
+    Route::post('/checkout/address', [CheckoutController::class, 'saveAddress']);
+    Route::post('/checkout/shipping', [CheckoutController::class, 'saveShipping']);
+    Route::post('/checkout/payment', [PaymentController::class, 'processPayment']);
+    Route::post('/fedex/rates', [FedExController::class, 'getRates']);
+    Route::get('/orders/{id}', [CheckoutController::class, 'getOrder']);
+
+    Route::get('/user/orders', [CheckoutController::class, 'userOrders']);
+    Route::get('/user/orders/{id}', [CheckoutController::class, 'userOrderShow']);
+
+    Route::post('/fedex/track', [FedExController::class, 'trackShipment']);
 });
 
 
@@ -79,6 +110,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+
+Route::get('/dashboard-stats', [AdminDashboardController::class, 'getStats']);
 
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{category}', [CategoryController::class, 'update']);
@@ -118,9 +151,13 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::post('/hero-cms', [HeroCmsController::class, 'update']);
 
 
-
     Route::get('/tax-ids', [TaxIdController::class, 'index']);
     Route::patch('/tax-ids/{taxId}/status', [TaxIdController::class, 'updateStatus']);
+
+
+    Route::get('/orders', [CheckoutController::class, 'adminIndex']);
+    Route::get('/orders/{id}', [CheckoutController::class, 'adminShow']);
+    Route::post('/orders/{id}/ship', [FedExController::class, 'createShipment']);
     
 });
 
